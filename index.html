@@ -3,7 +3,7 @@
  <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Healthcare Sustainability Game</title>
+  <title>Hospital Net Zero Challenge</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
@@ -69,7 +69,7 @@
    <div id="welcome-screen" class="max-w-4xl mx-auto">
     <div class="bg-slate-800/60 rounded-3xl p-12 border border-slate-700 shadow-2xl">
      <div class="text-center mb-8">
-      <h1 class="text-5xl font-bold bg-gradient-to-r from-emerald-400 to-teal-300 bg-clip-text text-transparent mb-4">Welcome to The Premier Online Simulator!</h1>
+      <h1 class="text-5xl font-bold bg-gradient-to-r from-emerald-400 to-teal-300 bg-clip-text text-transparent mb-4">Alexandra Hospital Carbon Learning Game</h1>
       <h2 class="text-xl font-semibold text-emerald-300 mb-6">This simulator aims to deepen your understanding of net-zero interventions in hospital environments.</h2>
      </div>
      <div class="text-slate-200 space-y-4 text-lg leading-relaxed mb-8">
@@ -83,7 +83,7 @@
     </div>
    </div><!-- Header -->
    <header id="game-header" class="text-center mb-8 hidden">
-    <h1 id="game-title" class="text-4xl font-bold bg-gradient-to-r from-emerald-400 to-teal-300 bg-clip-text text-transparent mb-2">Healthcare Sustainability Challenge</h1>
+    <h1 id="game-title" class="text-4xl font-bold bg-gradient-to-r from-emerald-400 to-teal-300 bg-clip-text text-transparent mb-2">Hospital Net Zero Challenge</h1>
     <p id="round-label" class="text-emerald-300/70 text-lg"><span id="year-display">Year 1</span> of 7 - Make Your Decisions</p>
    </header><!-- Metrics Display -->
    <div id="metrics-display" class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8 max-w-5xl mx-auto hidden">
@@ -162,8 +162,13 @@
         <div id="final-satisfaction-change" class="text-sm"></div>
        </div>
       </div>
-     </div><!-- View Results Button -->
-     <div class="text-center mb-6"><button onclick="showFinalResults()" class="px-12 py-4 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 rounded-xl font-semibold text-white text-xl shadow-lg shadow-emerald-500/25 transition-all"> View Year 7 Results </button>
+     </div><!-- All Selected Initiatives Summary -->
+     <div class="bg-slate-700/50 rounded-2xl p-6 border border-slate-600 mb-6">
+      <h3 class="text-emerald-400 font-semibold mb-4 text-xl text-center">📊 All Initiatives Selected Over 7 Years</h3>
+      <div id="all-initiatives-summary" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3"></div>
+      <div class="text-center mt-4 text-slate-400 text-sm">
+       Total initiatives implemented: <span id="total-initiatives-count" class="text-emerald-400 font-semibold">0</span>
+      </div>
      </div>
      <div class="text-center"><button onclick="resetGame()" class="px-8 py-3 bg-slate-700 hover:bg-slate-600 rounded-xl font-semibold text-white transition-all"> 🔁 Start New Simulation </button>
      </div>
@@ -230,16 +235,12 @@
         <canvas id="satisfaction-chart"></canvas>
        </div>
       </div>
-     </div><!-- Selected Initiatives Summary -->
-     <div class="bg-slate-800/40 rounded-2xl p-6 border border-slate-700/50 mb-6">
-      <h3 class="text-emerald-400 font-semibold mb-4 flex items-center gap-2"><span>✅</span> <span>Selected Initiatives</span></h3>
-      <div id="selected-summary" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
      </div><!-- Feedback Section -->
      <div class="bg-slate-800/40 rounded-2xl p-6 border border-slate-700/50 mb-6">
       <h3 class="text-sky-400 font-semibold mb-4 flex items-center gap-2"><span>💬</span> <span>Initiative Feedback</span></h3>
       <div id="feedback-summary" class="space-y-3"></div>
      </div>
-     <div class="text-center"><button id="next-year-btn" onclick="nextYear()" class="px-8 py-3 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 rounded-xl font-semibold text-white shadow-lg shadow-emerald-500/25 transition-all mr-4"> <span id="next-year-text">Continue to Year 2 →</span> </button> <button onclick="resetGame()" class="px-8 py-3 bg-slate-700 hover:bg-slate-600 rounded-xl font-semibold text-white transition-all"> 🔁 Start Over </button>
+     <div class="text-center"><button id="next-year-btn" class="px-8 py-3 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 rounded-xl font-semibold text-white shadow-lg shadow-emerald-500/25 transition-all mr-4"> <span id="next-year-text">Continue to Year 2 →</span> </button> <button onclick="resetGame()" class="px-8 py-3 bg-slate-700 hover:bg-slate-600 rounded-xl font-semibold text-white transition-all"> 🔁 Start Over </button>
      </div>
     </div>
    </div>
@@ -366,7 +367,7 @@
           {
             id: 'plastic',
             name: 'Single-Use Plastic Reduction Programme',
-            icon: '🚫',
+            icon: '♻️',
             effects: { cost: -47000, carbon: -170, electricity: 0 },
             description: 'This intervention involves a single-use plastic reduction programme, which includes regular audits of: Use of single-use plastic items within offices and hospital wards. Use of clinical single-use plastics. Reduction opportunities can be identified and implemented, thereby leading to reductions in emissions and costs from purchasing and waste.',
             feedback: 'Limiting single-use plastics is helping to reduce operational costs and waste-related emissions. Although the changes have required some behavioural shifts, there have been very few complaints and no negative impact on staff engagement.'
@@ -530,7 +531,8 @@
             name: 'Implement Telemedicine',
             icon: '💻',
             effects: { cost: 18600, carbon: -170, electricity: 0 },
-            description: 'Telemedicine appointments result in reductions in travel, admissions, and bed days. In this initiative, the hospital redesigns its digital care pathway to conduct outpatient and primary care appointments remotely where possible. The investment required is $186,000, depreciated over 10 years. Shifting modes of care includes telehealth monitoring and remote diagnostics. These practices can also reduce exposure of patients to hospital environments and possible healthcare-acquired infections.'
+            description: 'Telemedicine appointments result in reductions in travel, admissions, and bed days. In this initiative, the hospital redesigns its digital care pathway to conduct outpatient and primary care appointments remotely where possible. The investment required is $186,000, depreciated over 10 years. Shifting modes of care includes telehealth monitoring and remote diagnostics. These practices can also reduce exposure of patients to hospital environments and possible healthcare-acquired infections.',
+            feedback: 'Telemedicine is reducing travel emissions and is enabling the hospital to treat more patients. There have been some initial challenges with the technology, but overall patients and staff are adapting well to the new system.'
           }
         ],
         operations: [
@@ -539,7 +541,8 @@
             name: 'Sustainable Waste Treatment',
             icon: '♻️',
             effects: { cost: 0, carbon: -240, electricity: 0 },
-            description: 'For this intervention, the hospital implements alternatives to incineration where feasible. Instead, waste is disposed of using legislated methods including autoclaving, microwaving, and steam treatment integrated with internal mixing. These alternatives minimize the formation and release of chemicals or hazardous emissions that occur during incineration.'
+            description: 'For this intervention, the hospital implements alternatives to incineration where feasible. Instead, waste is disposed of using legislated methods including autoclaving, microwaving, and steam treatment integrated with internal mixing. These alternatives minimize the formation and release of chemicals or hazardous emissions that occur during incineration.',
+            feedback: 'The sustainable waste treatment methods are reducing emissions from waste disposal. The new processes are also helping to minimize the release of hazardous chemicals into the environment.'
           }
         ],
         supply: [
@@ -620,7 +623,7 @@
 
     // Default config
     const defaultConfig = {
-      game_title: 'Healthcare Sustainability Challenge',
+      game_title: 'Hospital Net Zero Challenge',
       round_label: 'Round 1 of 1 - Make Your Decisions',
       background_color: '#0f172a',
       accent_color: '#10b981',
@@ -1361,31 +1364,31 @@
     }
 
     function displayResults() {
-      // Check if year 7 is complete - show endgame screen
-      if (currentYear === 7) {
-        showEndgameScreen();
-        return;
-      }
-
       document.getElementById('results-year').textContent = currentYear;
 
       // Show/hide next year button and update text
       const nextYearBtn = document.getElementById('next-year-btn');
       const nextYearText = document.getElementById('next-year-text');
       
-      nextYearBtn.style.display = 'inline-block';
-      if (currentYear === 1) {
-        nextYearText.textContent = 'Continue to Year 2 →';
-      } else if (currentYear === 2) {
-        nextYearText.textContent = 'Continue to Year 3 →';
-      } else if (currentYear === 3) {
-        nextYearText.textContent = 'Continue to Year 4 →';
-      } else if (currentYear === 4) {
-        nextYearText.textContent = 'Continue to Year 5 →';
-      } else if (currentYear === 5) {
-        nextYearText.textContent = 'Continue to Year 6 →';
-      } else if (currentYear === 6) {
-        nextYearText.textContent = 'Continue to Year 7 →';
+      if (currentYear === 7) {
+        nextYearText.textContent = 'View Final Summary →';
+        nextYearBtn.onclick = () => showFinalSummary();
+      } else {
+        nextYearBtn.onclick = () => nextYear();
+        nextYearBtn.style.display = 'inline-block';
+        if (currentYear === 1) {
+          nextYearText.textContent = 'Continue to Year 2 →';
+        } else if (currentYear === 2) {
+          nextYearText.textContent = 'Continue to Year 3 →';
+        } else if (currentYear === 3) {
+          nextYearText.textContent = 'Continue to Year 4 →';
+        } else if (currentYear === 4) {
+          nextYearText.textContent = 'Continue to Year 5 →';
+        } else if (currentYear === 5) {
+          nextYearText.textContent = 'Continue to Year 6 →';
+        } else if (currentYear === 6) {
+          nextYearText.textContent = 'Continue to Year 7 →';
+        }
       }
 
       // Update metrics display with latest values
@@ -1393,19 +1396,6 @@
 
       // Create charts
       createCharts();
-
-      // Show selected initiatives
-      const summaryContainer = document.getElementById('selected-summary');
-      summaryContainer.innerHTML = '';
-      selectedDecisions.forEach(id => {
-        const decision = getDecisionById(id);
-        if (decision) {
-          const item = document.createElement('div');
-          item.className = 'bg-slate-700/50 rounded-lg p-3 flex items-center gap-3';
-          item.innerHTML = `<span class="text-xl">${decision.icon}</span><span class="text-slate-200">${decision.name}</span>`;
-          summaryContainer.appendChild(item);
-        }
-      });
 
       // Show feedback for selected initiatives
       const feedbackContainer = document.getElementById('feedback-summary');
@@ -1430,6 +1420,11 @@
     }
 
     function showEndgameScreen() {
+      // Directly show final summary screen without showing Year 7 results first
+      showFinalSummary();
+    }
+
+    function showFinalSummary() {
       // Hide game content and show endgame screen
       document.getElementById('game-content').classList.add('hidden');
       document.getElementById('game-header').classList.add('hidden');
@@ -1449,12 +1444,12 @@
         endgameIcon.textContent = '🎉';
         endgameTitle.textContent = 'Congratulations!';
         endgameTitle.className = 'text-5xl font-bold mb-4 bg-gradient-to-r from-emerald-400 to-teal-300 bg-clip-text text-transparent';
-        endgameMessage.textContent = `You have successfully reduced carbon emissions by ${carbonReduction.toFixed(1)}%, bringing us closer to the Net Zero target! Your hospital is now a sustainability champion.`;
+        endgameMessage.textContent = `You have successfully reduced carbon emissions by ${carbonReduction.toFixed(1)}%, exceeding the 40% reduction target! Your hospital is now a sustainability champion and is well on track toward the Net Zero 2050 goal.`;
       } else {
-        endgameIcon.textContent = '😔';
-        endgameTitle.textContent = 'Simulation Incomplete';
-        endgameTitle.className = 'text-5xl font-bold mb-4 bg-gradient-to-r from-amber-400 to-rose-400 bg-clip-text text-transparent';
-        endgameMessage.textContent = `Unfortunately, you only reduced carbon emissions by ${carbonReduction.toFixed(1)}%. The target was a 40% reduction. Consider trying different sustainability strategies to reach the goal.`;
+        endgameIcon.textContent = '💪';
+        endgameTitle.textContent = 'Keep Going!';
+        endgameTitle.className = 'text-5xl font-bold mb-4 bg-gradient-to-r from-amber-400 to-emerald-400 bg-clip-text text-transparent';
+        endgameMessage.textContent = `You reduced carbon emissions by ${carbonReduction.toFixed(1)}%. While you didn't reach the 40% target this time, every step toward sustainability matters! Try again with different strategies—achieving Net Zero is a journey that takes practice and experimentation. Don't give up!`;
       }
 
       // Display final metrics
@@ -1484,59 +1479,25 @@
       const satisfactionChangeElement = document.getElementById('final-satisfaction-change');
       satisfactionChangeElement.textContent = `${satisfactionChange > 0 ? '↑' : satisfactionChange < 0 ? '↓' : '→'} ${Math.abs(satisfactionChange).toFixed(0)} from start`;
       satisfactionChangeElement.className = `text-sm ${satisfactionChange > 0 ? 'text-emerald-400' : satisfactionChange < 0 ? 'text-rose-400' : 'text-slate-400'}`;
-    }
 
-    function showFinalResults() {
-      // Hide endgame screen and show final year 7 results
-      document.getElementById('endgame-screen').classList.add('hidden');
-      document.getElementById('game-header').classList.remove('hidden');
-      document.getElementById('metrics-display').classList.remove('hidden');
-      document.getElementById('game-content').classList.remove('hidden');
-      document.getElementById('results-phase').classList.remove('hidden');
-
-      // Set to show Year 7 results
-      document.getElementById('results-year').textContent = '7';
+      // Populate all initiatives summary
+      const allInitiativesContainer = document.getElementById('all-initiatives-summary');
+      allInitiativesContainer.innerHTML = '';
       
-      // Hide next year button since this is the end
-      document.getElementById('next-year-btn').style.display = 'none';
-
-      // Update metrics display and create charts
-      updateMetricsDisplay();
-      createCharts();
-
-      // Show selected initiatives
-      const summaryContainer = document.getElementById('selected-summary');
-      summaryContainer.innerHTML = '';
-      selectedDecisions.forEach(id => {
-        const decision = getDecisionById(id);
-        if (decision) {
-          const item = document.createElement('div');
-          item.className = 'bg-slate-700/50 rounded-lg p-3 flex items-center gap-3';
-          item.innerHTML = `<span class="text-xl">${decision.icon}</span><span class="text-slate-200">${decision.name}</span>`;
-          summaryContainer.appendChild(item);
-        }
+      initiativeHistory.forEach(item => {
+        const initiativeCard = document.createElement('div');
+        initiativeCard.className = 'bg-slate-800/60 rounded-lg p-3 border border-slate-600';
+        initiativeCard.innerHTML = `
+          <div class="flex items-center gap-2 mb-1">
+            <span class="text-xl">${item.icon}</span>
+            <span class="text-emerald-400 font-semibold text-xs">Year ${item.year}</span>
+          </div>
+          <div class="text-slate-200 text-sm font-medium">${item.name}</div>
+        `;
+        allInitiativesContainer.appendChild(initiativeCard);
       });
 
-      // Show feedback for selected initiatives
-      const feedbackContainer = document.getElementById('feedback-summary');
-      feedbackContainer.innerHTML = '';
-      selectedDecisions.forEach(id => {
-        const decision = getDecisionById(id);
-        if (decision && decision.feedback) {
-          const feedbackItem = document.createElement('div');
-          feedbackItem.className = 'bg-slate-700/30 rounded-lg p-4 border-l-4 border-emerald-400';
-          feedbackItem.innerHTML = `
-            <div class="flex items-start gap-3">
-              <span class="text-2xl">${decision.icon}</span>
-              <div>
-                <h4 class="font-semibold text-emerald-300 mb-1">${decision.name}</h4>
-                <p class="text-slate-300 text-sm leading-relaxed">${decision.feedback}</p>
-              </div>
-            </div>
-          `;
-          feedbackContainer.appendChild(feedbackItem);
-        }
-      });
+      document.getElementById('total-initiatives-count').textContent = initiativeHistory.length;
     }
 
     function createCharts() {
@@ -1737,6 +1698,9 @@
       populateDecisions();
       updateHistoryDisplay(); // Show history of previous choices
       updateSelectionCount();
+      
+      // Reset button handler for regular years
+      document.getElementById('next-year-btn').onclick = null;
     }
 
     function resetGame() {
@@ -1814,5 +1778,5 @@
 
     initGame();
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9be4080ce1c7f910',t:'MTc2ODQ2NjA0MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c26dcc63156ce43',t:'MTc2OTE2NjgxMy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
