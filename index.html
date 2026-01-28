@@ -203,22 +203,43 @@
      <div class="text-center mb-6">
       <p class="text-emerald-300/80 mb-4">Select up to 3 sustainability initiatives for your healthcare facility</p>
       <p id="selection-count" class="text-sm text-slate-400">0 of 3 initiatives selected</p>
+     </div><!-- Staff Training Slider -->
+     <div class="bg-slate-800/60 rounded-2xl p-6 border border-emerald-500/30 mb-6 max-w-4xl mx-auto">
+      <div class="flex items-start gap-3 mb-4"><span class="text-3xl">📚</span>
+       <div class="flex-1">
+        <h3 class="text-emerald-400 font-semibold text-xl mb-2">Staff Training and Engagement</h3>
+        <p class="text-slate-300 text-sm leading-relaxed mb-4">Training staff on the importance of climate change, greenhouse gas emissions and examples of the actions that they can take to reduce them can have a significant impact on the environment and people's health.</p>
+        <p class="text-slate-300 text-sm leading-relaxed mb-4">Depending on the amount spent, training activities can include:</p>
+        <ul class="text-slate-300 text-sm leading-relaxed mb-4 list-disc list-inside space-y-1">
+         <li>Integration of sustainability into new employee orientations.</li>
+         <li>A module on sustainability and annual mandatory training.</li>
+         <li>An employee special interest group (or 'green team') on environmental sustainability.</li>
+        </ul>
+        <p class="text-slate-400 text-xs italic">The hospital employs 2,000 people, so a $279,000 budget would provide a $140 per employee investment in training.</p>
+       </div>
+      </div>
+      <div class="mt-6">
+       <div class="flex justify-between items-center mb-3"><label class="text-slate-300 font-medium">Training Budget:</label> <span id="training-value" class="text-2xl font-bold text-emerald-400">S$0</span>
+       </div><input type="range" id="training-slider" min="0" max="4" step="1" value="0" class="w-full h-3 bg-slate-700 rounded-lg appearance-none cursor-pointer slider-thumb" style="accent-color: #10b981;">
+       <div class="flex justify-between text-xs text-slate-400 mt-2"><span>S$0</span> <span>S$125k</span> <span>S$250k</span> <span>S$375k</span> <span>S$500k</span>
+       </div>
+      </div>
      </div><!-- Categories Grid -->
      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8"><!-- Leadership & Governance -->
       <div class="bg-slate-800/40 rounded-2xl p-5 border border-slate-700/50">
-       <h3 class="category-header text-emerald-400 font-semibold mb-4 pb-2">🎯 Leadership &amp; Governance</h3>
+       <h3 class="category-header text-emerald-400 font-semibold mb-4 pb-2 flex items-center gap-2"><span class="text-2xl">👔</span> <span>Leadership &amp; Governance</span></h3>
        <div class="space-y-3" id="leadership-decisions"></div>
       </div><!-- Clinical Practices -->
       <div class="bg-slate-800/40 rounded-2xl p-5 border border-slate-700/50">
-       <h3 class="category-header text-sky-400 font-semibold mb-4 pb-2">⚕️ Clinical Practices</h3>
+       <h3 class="category-header text-sky-400 font-semibold mb-4 pb-2 flex items-center gap-2"><span class="text-2xl">⚕️</span> <span>Clinical Practices</span></h3>
        <div class="space-y-3" id="clinical-decisions"></div>
       </div><!-- Operations -->
       <div class="bg-slate-800/40 rounded-2xl p-5 border border-slate-700/50">
-       <h3 class="category-header text-amber-400 font-semibold mb-4 pb-2">⚙️ Operations</h3>
+       <h3 class="category-header text-amber-400 font-semibold mb-4 pb-2 flex items-center gap-2"><span class="text-2xl">⚙️</span> <span>Operations</span></h3>
        <div class="space-y-3" id="operations-decisions"></div>
       </div><!-- Supply Chain -->
       <div class="bg-slate-800/40 rounded-2xl p-5 border border-slate-700/50">
-       <h3 class="category-header text-rose-400 font-semibold mb-4 pb-2">📦 Supply Chain</h3>
+       <h3 class="category-header text-rose-400 font-semibold mb-4 pb-2 flex items-center gap-2"><span class="text-2xl">📦</span> <span>Supply Chain</span></h3>
        <div class="space-y-3" id="supply-decisions"></div>
       </div>
      </div>
@@ -301,6 +322,7 @@
     let medicalDevicesYearChosen = null;
     let initiativeHistory = []; // Track which initiatives were chosen each year
     let historyExpanded = true; // Track history panel state
+    let trainingBudget = 0; // Track current year's training budget
 
     // Start game function
     function startGame() {
@@ -459,7 +481,7 @@
           {
             id: 'green_spaces',
             name: 'Optimise Green Spaces Around the Hospital',
-            icon: '🌱',
+            icon: '🌳',
             effects: { cost: 28000, carbon: 0, electricity: 0, employeeEngagement: 1, hospitalRating: 0.25 },
             description: 'The space that surrounds the hospital can be made greener through increased vegetation at a cost of $27,900 per year. Although additional green spaces may result in a small amount of carbon capture, this impact may be difficult to measure and too small to be counted towards the hospital\'s \'net\' emissions. The main benefit of the green spaces will be in improved staff engagement and patient satisfaction.',
             feedback: 'The new green spaces are improving air quality and making the hospital grounds more appealing, resulting in improvements in staff engagement, patient satisfaction, and hospital rating. Although vegetation can help to capture carbon from the air, the green spaces around the hospital are not large enough to result in a measurable and significant reduction in the hospital\'s net emissions.'
@@ -881,9 +903,9 @@
       const carbonTotalElement = document.getElementById('carbon-total-change');
       const electricityTotalElement = document.getElementById('electricity-total-change');
 
-      costTotalElement.textContent = `${costTotalChange > 0 ? '↑' : costTotalChange < 0 ? '↓' : ''} ${Math.abs(costTotalChange).toFixed(1)}%`;
-      carbonTotalElement.textContent = `${carbonTotalChange > 0 ? '↑' : carbonTotalChange < 0 ? '↓' : ''} ${Math.abs(carbonTotalChange).toFixed(1)}%`;
-      electricityTotalElement.textContent = `${electricityTotalChange > 0 ? '↑' : electricityTotalChange < 0 ? '↓' : ''} ${Math.abs(electricityTotalChange).toFixed(1)}%`;
+      costTotalElement.textContent = `${costTotalChange > 0 ? '💰' : costTotalChange < 0 ? '💵' : ''} ${Math.abs(costTotalChange).toFixed(1)}%`;
+      carbonTotalElement.textContent = `${carbonTotalChange > 0 ? '📈' : carbonTotalChange < 0 ? '📉' : ''} ${Math.abs(carbonTotalChange).toFixed(1)}%`;
+      electricityTotalElement.textContent = `${electricityTotalChange > 0 ? '📈' : electricityTotalChange < 0 ? '📉' : ''} ${Math.abs(electricityTotalChange).toFixed(1)}%`;
 
       // Color coding for year-over-year changes
       document.getElementById('cost-change').className = `text-xs mt-1 ${costChange > 0 ? 'text-rose-400' : costChange < 0 ? 'text-emerald-400' : 'text-slate-500'}`;
@@ -1233,6 +1255,21 @@
         return;
       }
 
+      // Apply yearly employee engagement decrease
+      metrics.employeeEngagement -= 1;
+
+      // Apply training budget effects
+      metrics.cost += trainingBudget;
+      
+      // Apply employee engagement based on training budget
+      if (trainingBudget === 125000) {
+        metrics.employeeEngagement += 1;
+      } else if (trainingBudget === 250000) {
+        metrics.employeeEngagement += 2;
+      } else if (trainingBudget === 375000 || trainingBudget === 500000) {
+        metrics.employeeEngagement += 2;
+      }
+
       // Apply effects and track history
       selectedDecisions.forEach(id => {
         const decision = getDecisionById(id);
@@ -1447,6 +1484,52 @@
       // Show feedback for selected initiatives
       const feedbackContainer = document.getElementById('feedback-summary');
       feedbackContainer.innerHTML = '';
+      
+      // Add training feedback first if applicable
+      if (trainingBudget > 0) {
+        let trainingFeedback = '';
+        let borderColor = 'border-emerald-400';
+        
+        if (trainingBudget === 125000) {
+          trainingFeedback = 'Your investment in staff training is having a positive impact on employee engagement and awareness of sustainability practices.';
+        } else if (trainingBudget === 250000) {
+          trainingFeedback = 'Your staff training program is significantly improving employee engagement and empowering staff to take meaningful sustainability actions.';
+        } else if (trainingBudget === 375000) {
+          trainingFeedback = 'You are spending a large amount on staff training. Although staff training is important, at some point spending more money on it has diminishing returns.';
+          borderColor = 'border-amber-400';
+        } else if (trainingBudget === 500000) {
+          trainingFeedback = 'You are spending a large amount on staff training. Although staff training is important, at some point spending more money on it has diminishing returns.';
+          borderColor = 'border-amber-400';
+        }
+        
+        const trainingItem = document.createElement('div');
+        trainingItem.className = `bg-slate-700/30 rounded-lg p-4 border-l-4 ${borderColor}`;
+        trainingItem.innerHTML = `
+          <div class="flex items-start gap-3">
+            <span class="text-2xl">📚</span>
+            <div>
+              <h4 class="font-semibold text-emerald-300 mb-1">Staff Training and Engagement</h4>
+              <p class="text-slate-300 text-sm leading-relaxed">${trainingFeedback}</p>
+            </div>
+          </div>
+        `;
+        feedbackContainer.appendChild(trainingItem);
+      } else {
+        // Show warning if no training budget allocated
+        const noTrainingItem = document.createElement('div');
+        noTrainingItem.className = 'bg-slate-700/30 rounded-lg p-4 border-l-4 border-rose-400';
+        noTrainingItem.innerHTML = `
+          <div class="flex items-start gap-3">
+            <span class="text-2xl">⚠️</span>
+            <div>
+              <h4 class="font-semibold text-rose-300 mb-1">Staff Training and Engagement</h4>
+              <p class="text-slate-300 text-sm leading-relaxed">You did not spend on staff training this year. Remember that your employees need knowledge and skills to keep on making the hospital more sustainable.</p>
+            </div>
+          </div>
+        `;
+        feedbackContainer.appendChild(noTrainingItem);
+      }
+      
       selectedDecisions.forEach(id => {
         const decision = getDecisionById(id);
         if (decision && decision.feedback) {
@@ -1813,6 +1896,11 @@
       currentYear++;
       yearStartMetrics = { ...metrics };
       selectedDecisions.clear();
+      trainingBudget = 0; // Reset training budget for new year
+
+      // Reset slider UI
+      document.getElementById('training-slider').value = 0;
+      document.getElementById('training-value').textContent = 'S$0';
 
       // Update UI
       document.getElementById('year-display').textContent = `Year ${currentYear}`;
@@ -1838,6 +1926,11 @@
       medicalDevicesYearChosen = null;
       initiativeHistory = []; // Clear history
       historyExpanded = true; // Reset history panel state
+      trainingBudget = 0; // Reset training budget
+      
+      // Reset slider UI
+      document.getElementById('training-slider').value = 0;
+      document.getElementById('training-value').textContent = 'S$0';
       
       // Destroy charts
       Object.values(charts).forEach(chart => chart.destroy());
@@ -1899,9 +1992,24 @@
       populateDecisions();
       updateMetricsDisplay();
       applyConfig();
+      
+      // Setup training slider
+      const trainingSlider = document.getElementById('training-slider');
+      const trainingValue = document.getElementById('training-value');
+      
+      trainingSlider.addEventListener('input', (e) => {
+        const values = [0, 125000, 250000, 375000, 500000];
+        trainingBudget = values[parseInt(e.target.value)];
+        
+        if (trainingBudget === 0) {
+          trainingValue.textContent = 'S$0';
+        } else {
+          trainingValue.textContent = `S$${(trainingBudget / 1000).toFixed(0)}k`;
+        }
+      });
     }
 
     initGame();
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c3ded5d820bfdec',t:'MTc2OTQwODY2NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c4cedb1f2278a13',t:'MTc2OTU2NTk2NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
